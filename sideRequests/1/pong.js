@@ -100,78 +100,7 @@ function returnFrame2(centerX, centerY, width, height, maze){
 	return frame;
 }
 
-function pathFinder(sourceX, sourceY, targetX, targetY, frame){
-	var frameSize = 11;
-	var path = new Array();
-	for(var i=0; i<frameSize; i++){
-		path[i] = new Array();
-		for(var j=0; j<frameSize; j++){
-			path[i][j] = 0;
-		}
-	}
-	
-	//functions
-	function addAdjacent(X, Y, number){
-		if(X>0 && frame[X-1][Y]===0 && path[X-1][Y]===0){
-			path[X-1][Y] = number+1;
-		}
-		if(X<frameSize-1 && frame[X+1][Y]===0 && path[X+1][Y]===0){
-			path[X+1][Y] = number+1;
-		}
-		if(Y<frameSize-1 && frame[X][Y+1]===0 && path[X][Y+1]===0){
-			path[X][Y+1] = number+1;
-		}
-		if(Y>0 && frame[X][Y-1]===0 && path[X][Y-1]===0){
-			path[X][Y-1] = number+1;
-		}
-	}
-	
-	//add adjacent
-	
-	var iterations = 1;
-	path[sourceX][sourceY] = iterations;
-	addAdjacent(sourceX, sourceY, iterations);
-	
-	
-	while(path[targetX][targetY]==0){
-		iterations += 1;
-		for(var i=0; i<frameSize; i++){
-			for(var j=0; j<frameSize; j++){
-				if(path[i][j]==iterations){
-					addAdjacent(i, j, iterations);
-				}
-			}
-		}
-	}
-	
-	var actions = new Array();
-	currentX = targetX;
-	currentY = targetY;
-	for(var step = path[targetX][targetY]-1; step>0; step--){
-		console.log(currentX);
-		if(currentX>0 && path[currentX-1][currentY]==step){
-			currentX = currentX - 1;
-			actions.unshift([0,1]);
-		}
-		else if(currentX<frameSize-1 && path[currentX+1][currentY]==step){
-			currentX = currentX + 1;
-			actions.unshift([0,-1]);
-		}
-		else if(currentY>0 && path[currentX][currentY-1]==step){
-			currentY = currentY - 1;
-			actions.unshift([1,0]);
-		}
-		else if(currentY<frameSize-1 && path[currentX][currentY+1]==step){
-			currentY = currentY + 1;
-			actions.unshift([-1,0]);
-		}
-	}
-	
-	return actions;
-}
-
 //test
-/*
 var height = 11;
 var width = 11;
 
@@ -195,14 +124,3 @@ for(var i = 0; i<frame.length; i++){
     mazeOutput += "</br>"
 }
 document.write(mazeOutput);
-
-var actions = pathFinder(0,0,10,10, frame);
-mazeOutput = "</br>Results3:</br>";
-for(var i = 0; i<actions.length; i++){
-	for(var j=0; j<actions[i].length; j++){
-		mazeOutput += actions[i][j];
-	}
-    mazeOutput += "</br>"
-}
-document.write(mazeOutput);
-*/
