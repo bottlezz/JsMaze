@@ -69,13 +69,22 @@
 	var empty4Texture=PIXI.Texture.fromImage("block4.png");
 	var empty5Texture=PIXI.Texture.fromImage("block5.png");
 	var empty6Texture=PIXI.Texture.fromImage("block6.png");
-	var charTexture;
+	var charTexture=PIXI.Texture.fromImage("character1.png");
 	var bg;
 	var blockSize=15;
 	
 	function GridBlock(x,y)
     {
         this.Disp = new PIXI.Sprite(empty6Texture);
+        this.Disp.anchor.x = 0;
+        this.Disp.anchor.y = 0;
+        this.Disp.position.x = x*blockSize+blockSize;
+        this.Disp.position.y = y*blockSize+blockSize;
+
+    }
+    function CharBlock(x,y)
+    {
+        this.Disp = new PIXI.Sprite(charTexture);
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
         this.Disp.position.x = x*blockSize+blockSize;
@@ -120,6 +129,7 @@
 			}
 		}
 	}
+	
 
 
 
@@ -159,6 +169,10 @@
 
 	// add background to stage..
 	stage.addChild(background);
+	var CharDisplay=new CharBlock(90,90); 
+
+	
+	stage.addChild(CharDisplay,100);
 
 
 	// add the renderer view element to the DOM
