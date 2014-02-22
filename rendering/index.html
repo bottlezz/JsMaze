@@ -18,7 +18,7 @@
 		}
 	</style>
 
-	<script src=""></script>
+	<script src="test.js"></script>
 
 	<script src="pixi.js"></script>
 </head>
@@ -43,6 +43,8 @@
 		}
 
 	}
+	grid=generateMaze(11,11)
+	console.log(grid)
 
 	var blockTexture=PIXI.Texture.fromImage("block1.png");
 	var emptyTexture=PIXI.Texture.fromImage("block3.png");
@@ -84,7 +86,7 @@
 		for(var i=0;i<11;i++){
 			for(var j=0;j<11;j++){
 				stage.addChild(mazegrid[i][j].Disp);
-				console.log(mazegrid[i][j].Disp.position.x)
+				//console.log(mazegrid[i][j].Disp.position.x)
 			}
 		}
 	}
