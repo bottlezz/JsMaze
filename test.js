@@ -64,10 +64,10 @@ function generateMaze(width, height){
 }
 
 
-function returnFrame(index, width, height){
+function returnFrame(index, width, height, maze){
 	var centerX = index%width;
 	var centerY = index/width;
-	return returnFrame2(centerX, centerY, width, height);
+	return returnFrame2(centerX, centerY, width, height, maze);
 	
 }
 
@@ -79,7 +79,7 @@ function isOutBound(indexX, indexY, width, height){
 	return 0;
 }
 
-function returnFrame2(centerX, centerY, width, height){
+function returnFrame2(centerX, centerY, width, height, maze){
 	var frameSize = 11;
 	var frame = new Array();
 	for(var i=0; i<frameSize; i++){
@@ -116,7 +116,7 @@ for(var i = 0; i<maze.length; i++){
 }
 document.write(mazeOutput);
 
-var frame = returnFrame2(15,15, width, height);
+var frame = returnFrame2(15,15, width, height, maze);
 mazeOutput = "</br>Results2:</br>";
 for(var i = 0; i<frame.length; i++){
 	for(var j=0; j<frame[i].length; j++){
