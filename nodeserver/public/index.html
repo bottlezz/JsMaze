@@ -49,6 +49,11 @@
 	// the second parameter is interactivity...
 	var interactive = true;
 	var stage = new PIXI.Stage(0xb2cac9, interactive);
+	function MazeLocation(inx,iny){
+		this.x=inx;
+		this.y=iny;
+	}
+	var Mylocation = new MazeLocation(16,14);
 
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(195, 195);
@@ -56,7 +61,7 @@
 
 	
 	maze1d=generateMaze(mazeWidth,mazeHeight);
-	var grid=returnFrame2(5,5,mazeWidth,mazeHeight,maze1d);
+	var grid=returnFrame2(16,14,mazeWidth,mazeHeight,maze1d);
 	mazedata = to2DArray(maze1d,mazeWidth,mazeHeight);
 
 	//console.log(grid.toString());
@@ -64,7 +69,7 @@
 
 	var blockTexture=PIXI.Texture.fromImage("block1.png");
 	var emptyTexture=PIXI.Texture.fromImage("block3.png");
-	var charTexture;
+	var charTexture=PIXI.Texture.fromImage("character1.png");
 	var bg;
 	var blockSize=15;
 	
@@ -112,19 +117,19 @@
 
 
 
-	var diffx=1000;
-	var diffy=1000;
+	var diffx=0;
+	var diffy=0;
 	function MazeUpdate(direction,data){
 		console.log(data);
 		for (var i = data.length - 1; i >= 0; i--) {
 			for (var j = data[i].length - 1; j >= 0; j--) {
 				if(diffy!=0){
 					data[i][j].Disp.position.y=data[i][j].Disp.position.y+direction[1]*speed;
-					diffy--;
+					diffy=diffy+direction[1]*speed;
 				}
 				if(diffx!=0){
 					data[i][j].Disp.position.x=data[i][j].Disp.position.x+direction[0]*speed;
-					diffx++;
+					diffx=diffx+direction[1]*speed;
 				}
 				
 			};
@@ -152,13 +157,38 @@
 
 	requestAnimFrame( animate );
 
+
 	var speed=1;
 	function move(gridx,gridy){
 
 	}
-	function walkPaht(path){
+	function walkPath(path){
+
 
 	}
+	var OnPath=false;
+    var CurrentPath=new Array();
+    
+	stage.click  = function()
+    {
+        mp = stage.getMousePosition(); 
+       // waitingmx = mp.x;
+       // waitingmy = mp.y; 
+        inputx=Math.floor(mp.x/blockSize);
+        inputy=Math.floor(mp.y/blockSize);
+        if(CurrentPath.length!=0)
+        	return;
+        var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
+        CurrentPath= pathFinder(5,5,inputx,inputy,grid);
+        if (CurrentPath.length==0) {
+        	OnPath=false;
+        }else{
+        	console.log(CurrentPath);
+        }
+
+
+    }
+   
 
 	function animate() {
 		
@@ -173,7 +203,10 @@
 			then = now - (delta % interval);
 			//stage.pivot.y++;
 			//console.log(stage.position.y);
-			MazeUpdate([-5,10],mazerenderData);
+			if(OnPath){
+				MazeUpdate(CurrentPath[0],mazerenderData);
+			}
+			
 			renderer.render(stage);
 			//do update here
 	    }
