@@ -1,4 +1,21 @@
 // width and height must be ODD!!
+
+
+var width = 400;
+var height = 800;
+var paddleLength = height/10;
+var paddleWidth = 10;
+var ballWidth = 10;
+
+var ballSpeed = 5.0; //everytime *1.2
+var ballDirection = [1,1]; //x direction, y direction
+var directions = [30,45,60,75,105,120,135,150];
+
+var score1 = 0;
+var score2 = 0;
+
+
+
 function generateMaze(width, height){
 	var cells = height*width;
 	var maze = new Array();
