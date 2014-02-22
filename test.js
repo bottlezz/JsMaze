@@ -101,27 +101,3 @@ function returnFrame2(centerX, centerY, width, height){
 }
 
 
-//test
-var height = 31;
-var width = 31;
-
-var maze = generateMaze(width, height);
-
-var mazeOutput = "Results:</br>";
-for(var i = 0; i<maze.length; i++){
-    mazeOutput += maze[i];
-    if(i%width==(width-1)){
-        mazeOutput += "</br>"
-    }
-}
-document.write(mazeOutput);
-
-var frame = returnFrame2(15,15, width, height);
-mazeOutput = "</br>Results2:</br>";
-for(var i = 0; i<frame.length; i++){
-	for(var j=0; j<frame[i].length; j++){
-		mazeOutput += frame[i][j];
-	}
-    mazeOutput += "</br>"
-}
-document.write(mazeOutput);
