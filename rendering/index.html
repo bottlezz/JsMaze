@@ -18,7 +18,7 @@
 		}
 	</style>
 
-
+	<script src=""></script>
 
 	<script src="pixi.js"></script>
 </head>
@@ -29,7 +29,7 @@
 	// create an new instance of a pixi stage
 	// the second parameter is interactivity...
 	var interactive = true;
-	var stage = new PIXI.Stage(0x000000, interactive);
+	var stage = new PIXI.Stage(0xb2cac9, interactive);
 
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(195, 195);
@@ -38,13 +38,14 @@
 	var grid=new Array(11);
 	for(var i=0;i<11;i++){
 		grid[i]=new Array(11);
+		for(var j=0;j<11;j++){
+			grid[i][j]=1;
+		}
 
 	}
-	function drawsecne(){
 
-	}
-	var blockTexture;
-	var emptyTexture;
+	var blockTexture=PIXI.Texture.fromImage("block1.png");
+	var emptyTexture=PIXI.Texture.fromImage("block3.png");
 	var charTexture;
 	var bg;
 	var blockSize=15;
@@ -67,36 +68,43 @@
 		}
 		for(var i=0;i<11;i++){
 			for(var j=0;j<11;j++){
-				var g= new GridBlock();
+				var g= new GridBlock(i,j);
 				if(mazeData[i][j]==0){
 					
 				}else{
-					g.setTexture(blockTexture);
+					g.Disp.setTexture(blockTexture);
 				}
 				mazeGrids[i][j]=g;
 			}
-
 		}
 		return mazeGrids;
 	}
 	function MazeSetup(mazegrid){
+		console.log(mazegrid);
 		for(var i=0;i<11;i++){
 			for(var j=0;j<11;j++){
 				stage.addChild(mazegrid[i][j].Disp);
+				console.log(mazegrid[i][j].Disp.position.x)
 			}
 		}
 	}
 
 
 
-	MazeSetup(ParseMazeData(mazeData));
-	
+	MazeSetup(ParseMazeData(grid));
+	// create a background..
+	var background = PIXI.Sprite.fromImage("frame.png");
+
+	// add background to stage..
+	stage.addChild(background);
 
 
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 
 	requestAnimFrame( animate );
+
+	/*
 
 	// create a background..
 	var background = PIXI.Sprite.fromImage("button_test_BG.jpg");
@@ -208,6 +216,7 @@
 	//buttons[4].scale.y = 1.2;
 	//buttons[4].rotation = Math.PI;
 	// var button1 =
+	*/
 	var speed=10;
 	function move(){}
 	function animate() {
@@ -233,7 +242,7 @@
 
 	//	var win=window.open("https://github.com/GoodBoyDigital/pixi.js", '_blank');
 
-	}
+	
 	</script>
 
 	</body>
