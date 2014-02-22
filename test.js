@@ -64,10 +64,10 @@ function generateMaze(width, height){
 }
 
 
-function returnFrame(index, width, height){
+function returnFrame(index, width, height, maze){
 	var centerX = index%width;
 	var centerY = index/width;
-	return returnFrame2(centerX, centerY, width, height);
+	return returnFrame2(centerX, centerY, width, height, maze);
 	
 }
 
@@ -79,7 +79,7 @@ function isOutBound(indexX, indexY, width, height){
 	return 0;
 }
 
-function returnFrame2(centerX, centerY, width, height){
+function returnFrame2(centerX, centerY, width, height, maze){
 	var frameSize = 11;
 	var frame = new Array();
 	for(var i=0; i<frameSize; i++){
@@ -101,3 +101,30 @@ function returnFrame2(centerX, centerY, width, height){
 }
 
 
+<<<<<<< HEAD
+=======
+//test
+var height = 31;
+var width = 31;
+
+var maze = generateMaze(width, height);
+
+var mazeOutput = "Results:</br>";
+for(var i = 0; i<maze.length; i++){
+    mazeOutput += maze[i];
+    if(i%width==(width-1)){
+        mazeOutput += "</br>"
+    }
+}
+document.write(mazeOutput);
+
+var frame = returnFrame2(15,15, width, height, maze);
+mazeOutput = "</br>Results2:</br>";
+for(var i = 0; i<frame.length; i++){
+	for(var j=0; j<frame[i].length; j++){
+		mazeOutput += frame[i][j];
+	}
+    mazeOutput += "</br>"
+}
+document.write(mazeOutput);
+>>>>>>> 1788e258114218517f04537952ca4f67edc9dcf1
