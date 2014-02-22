@@ -92,9 +92,15 @@
 			for(var j=0;j<mazeData[i].length;j++){
 				var g= new GridBlock(i,j);
 				if(mazeData[i][j]==0){
-					
+					if(i>0 && mazeData[i-1][j]==0 && j<mazeData[i].length-1 && mazeData[i][j+1]==1)
+						g.Disp.setTexture(empty3Texture);
+					else if(i>0 && mazeData[i-1][j]==1 && j<mazeData[i].length-1 && mazeData[i][j+1]==1)
+						g.Disp.setTexture(empty4Texture);
 				}else{
-					g.Disp.setTexture(blockTexture);
+					if(i<mazeData.length-1 && mazeData[i+1][j]==1)
+						g.Disp.setTexture(block1Texture);
+					else if(i<mazeData.length-1 && mazeData[i+1][j]==0)
+						g.Disp.setTexture(block2Texture);
 				}
 				mazeGrids[i][j]=g;
 			}
