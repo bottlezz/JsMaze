@@ -99,10 +99,7 @@ function returnFrame2(centerX, centerY, width, height, maze){
 	}
 	return frame;
 }
-
-
-<<<<<<< HEAD
-=======
+/*
 //test
 var height = 31;
 var width = 31;
@@ -126,5 +123,4 @@ for(var i = 0; i<frame.length; i++){
 	}
     mazeOutput += "</br>"
 }
-document.write(mazeOutput);
->>>>>>> 1788e258114218517f04537952ca4f67edc9dcf1
+document.write(mazeOutput);*/

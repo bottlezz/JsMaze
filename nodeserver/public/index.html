@@ -43,7 +43,9 @@
 		}
 
 	}
-	grid=generateMaze(11,11)
+	maze=generateMaze(31,31);
+	grid=returnFrame2(6,6,11,11,maze);
+
 	console.log(grid)
 
 	var blockTexture=PIXI.Texture.fromImage("block1.png");
