@@ -1,5 +1,5 @@
-var height = 25;
-var width = 25;
+var height = 31;
+var width = 31;
 var cells = height*width;
 var maze = new Array();
 for(var i=0; i<cells; i++){
@@ -59,11 +59,57 @@ function returnOtherSide(index){
     return -1;
 }
 
+var frameSize = 11;
+function returnFrame(index){
+	var centerX = index%width;
+	var centerY = index/width;
+	return returnFrame2(centerX, centerY);
+	
+}
+
+function isOutBound(indexX,indexY){
+	if(indexX < 0 || indexX >= width)
+		return 1;
+	if(indexY < 0 || indexY >= height)
+		return 1;
+	return 0;
+}
+
+function returnFrame2(centerX, centerY){
+	var frame = new Array();
+	for(var i=0; i<frameSize; i++){
+		frame[i] = new Array();
+	}
+	var windowSize = (frameSize-1)/2;
+	var leftCornerX = centerX - windowSize;
+	var leftCornerY = centerY - windowSize;
+
+	for(var i=leftCornerX; i<leftCornerX+frameSize; i++){
+		for(var j=leftCornerY; j<leftCornerY+frameSize; j++){
+			if(isOutBound(i, j)>0)
+				frame[j-leftCornerY][i-leftCornerX] = 1;
+			else
+				frame[j-leftCornerY][i-leftCornerX] = maze[j*width+i];
+		}
+	}
+	return frame;
+}
+
 var mazeOutput = "Results:</br>";
 for(var i = 0; i<maze.length; i++){
     mazeOutput += maze[i];
     if(i%width==(width-1)){
         mazeOutput += "</br>"
     }
+}
+document.write(mazeOutput);
+
+var frame = returnFrame2(15,15);
+mazeOutput = "</br>Results2:</br>";
+for(var i = 0; i<frame.length; i++){
+	for(var j=0; j<frame[i].length; j++){
+		mazeOutput += frame[i][j];
+	}
+    mazeOutput += "</br>"
 }
 document.write(mazeOutput);
