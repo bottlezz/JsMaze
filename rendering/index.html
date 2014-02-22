@@ -6,7 +6,7 @@
 		body {
 			margin: 0;
 			padding: 0;
-			background-color: #000000;
+			background-color: #b2cac9;
 		}
 
 		#help{
@@ -43,10 +43,10 @@
 		}
 
 	}
-	maze=generateMaze(31,31);
-	grid=returnFrame2(6,6,11,11,maze);
+	maze=generateMaze(11,11);
+	grid=returnFrame2(5,5,11,11,maze);
 
-	console.log(grid)
+	console.log(grid.toString());
 
 	var blockTexture=PIXI.Texture.fromImage("block1.png");
 	var emptyTexture=PIXI.Texture.fromImage("block3.png");
@@ -59,8 +59,8 @@
         this.Disp = new PIXI.Sprite(emptyTexture);
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
-        this.Disp.position.x = x*blockSize;
-        this.Disp.position.y = y*blockSize;
+        this.Disp.position.x = x*blockSize+blockSize;
+        this.Disp.position.y = y*blockSize+blockSize;
 
     }
 	//function moveBlock(x,y);
