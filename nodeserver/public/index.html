@@ -25,7 +25,26 @@
 <body>
 	<script>
 
-
+	var fps = 1;
+	var now;
+	var then = Date.now();
+	var interval = 1000/fps;
+	var delta;
+	var mazeWidth=31;
+	var mazeHeight=31;
+	var viewWidth=11;
+	var viewHeight=11;
+	var mazedata;
+	function to2DArray(array,width,height){
+		var first=new Array(width);
+		for(var i=0;i<width;i++){
+			first[i]=new Array(height);
+			for(var j=0;j<height;j++){
+				first[i][j]=array[i*width+j];
+			}
+		}
+		return first;
+	}
 	// create an new instance of a pixi stage
 	// the second parameter is interactivity...
 	var interactive = true;
@@ -35,18 +54,13 @@
 	var renderer = PIXI.autoDetectRenderer(195, 195);
 	
 
-	var grid=new Array(11);
-	for(var i=0;i<11;i++){
-		grid[i]=new Array(11);
-		for(var j=0;j<11;j++){
-			grid[i][j]=1;
-		}
+	
+	maze1d=generateMaze(mazeWidth,mazeHeight);
+	var grid=returnFrame2(5,5,mazeWidth,mazeHeight,maze1d);
+	mazedata = to2DArray(maze1d,mazeWidth,mazeHeight);
 
-	}
-	maze=generateMaze(11,11);
-	grid=returnFrame2(5,5,11,11,maze);
-
-	console.log(grid.toString());
+	//console.log(grid.toString());
+	console.log(mazedata);
 
 	var blockTexture=PIXI.Texture.fromImage("block1.png");
 	var emptyTexture=PIXI.Texture.fromImage("block3.png");
@@ -65,13 +79,14 @@
     }
 	//function moveBlock(x,y);
 	function ParseMazeData(mazeData){
-		var mazeGrids=new Array(11);
-		for(var i=0;i<11;i++){
-			mazeGrids[i]=new Array(11);
+		var mazeGrids=new Array(mazeWidth);
+		for(var i=0;i<mazeWidth;i++){
+			mazeGrids[i]=new Array(mazeHeight);
 
 		}
-		for(var i=0;i<11;i++){
-			for(var j=0;j<11;j++){
+		console.log(mazeGrids);
+		for(var i=0;i<mazeData.length;i++){
+			for(var j=0;j<mazeData[i].length;j++){
 				var g= new GridBlock(i,j);
 				if(mazeData[i][j]==0){
 					
@@ -84,9 +99,9 @@
 		return mazeGrids;
 	}
 	function MazeSetup(mazegrid){
-		console.log(mazegrid);
-		for(var i=0;i<11;i++){
-			for(var j=0;j<11;j++){
+		//sconsole.log(mazegrid);
+		for(var i=0;i<mazeWidth;i++){
+			for(var j=0;j<mazeHeight;j++){
 				stage.addChild(mazegrid[i][j].Disp);
 				//console.log(mazegrid[i][j].Disp.position.x)
 			}
@@ -95,9 +110,38 @@
 
 
 
-	MazeSetup(ParseMazeData(grid));
+
+
+	var diffx=1000;
+	var diffy=1000;
+	function MazeUpdate(direction,data){
+		console.log(data);
+		for (var i = data.length - 1; i >= 0; i--) {
+			for (var j = data[i].length - 1; j >= 0; j--) {
+				if(diffy!=0){
+					data[i][j].Disp.position.y=data[i][j].Disp.position.y+direction[1]*speed;
+					diffy--;
+				}
+				if(diffx!=0){
+					data[i][j].Disp.position.x=data[i][j].Disp.position.x+direction[0]*speed;
+					diffx++;
+				}
+				
+			};
+		};
+		
+
+	}
+
+
+
+	var mazerenderData=ParseMazeData(mazedata);
+	console.log(mazerenderData);
+	MazeSetup(mazerenderData);
+
 	// create a background..
 	var background = PIXI.Sprite.fromImage("frame.png");
+		
 
 	// add background to stage..
 	stage.addChild(background);
@@ -108,130 +152,33 @@
 
 	requestAnimFrame( animate );
 
-	/*
+	var speed=1;
+	function move(gridx,gridy){
 
-	// create a background..
-	var background = PIXI.Sprite.fromImage("button_test_BG.jpg");
+	}
+	function walkPaht(path){
 
-	// add background to stage..
-	stage.addChild(background);
+	}
 
-	// create some textures from an image path
-	var textureButton = PIXI.Texture.fromImage("button.png");
-	var textureButtonDown = PIXI.Texture.fromImage("buttonDown.png");
-	var textureButtonOver = PIXI.Texture.fromImage("buttonOver.png");
-
-	var buttons = [];
-
-	var buttonPositions = [175,75,
-						   600-145, 75,
-						   600/2 - 20, 400/2 + 10,
-						   175, 400-75,
-						   600-115, 400-95];
-
-
-
-
-	for (var i=0; i < 5; i++)
-	{
-		var button = new PIXI.Sprite(textureButton);
-		button.buttonMode = true;
-
-		button.anchor.x = 0.5;
-		button.anchor.y = 0.5;
-
-		button.position.x = buttonPositions[i*2];
-		button.position.y = buttonPositions[i*2 + 1];
-
-		// make the button interactive..
-		button.interactive = true;
-
-		// set the mousedown and touchstart callback..
-		button.mousedown = button.touchstart = function(data){
-
-			this.isdown = true;
-			this.setTexture(textureButtonDown);
-			this.alpha = 1;
-		}
-
-		// set the mouseup and touchend callback..
-		button.mouseup = button.touchend = button.mouseupoutside = button.touchendoutside = function(data){
-			this.isdown = false;
-
-			if(this.isOver)
-			{
-				this.setTexture(textureButtonOver);
-			}
-			else
-			{
-				this.setTexture(textureButton);
-			}
-		}
-
-		// set the mouseover callback..
-		button.mouseover = function(data){
-
-			this.isOver = true;
-
-			if(this.isdown)return
-
-			this.setTexture(textureButtonOver)
-		}
-
-		// set the mouseout callback..
-		button.mouseout = function(data){
-
-			this.isOver = false;
-			if(this.isdown)return
-			this.setTexture(textureButton)
-		}
-
-		button.click = function(data){
-			// click!
-			console.log("CLICK!");
-		//	alert("CLICK!")
-		}
-
-		button.tap = function(data){
-			// click!
-			console.log("TAP!!");
-			//this.alpha = 0.5;
-		}
-
-		// add it to the stage
-		stage.addChild(button);
-
-		// add button to array
-		buttons.push(button);
-	};
-
-	// set some silly values..
-
-	//buttons[0].scale.x = 1.2;
-
-	//buttons[1].scale.y = 1.2;
-
-	//buttons[2].rotation = Math.PI/10;
-
-	//buttons[3].scale.x = 0.8;
-	//buttons[3].scale.y = 0.8;
-
-	//buttons[4].scale.x = 0.8;
-	//buttons[4].scale.y = 1.2;
-	//buttons[4].rotation = Math.PI;
-	// var button1 =
-	*/
-	var speed=10;
-	function move(){}
 	function animate() {
-
+		
 	    requestAnimFrame( animate );
 	    // render the stage
 
 	    // do a test..
+	    now = Date.now();
+		delta = now - then;
+	    if (delta > interval){
 
-	    renderer.render(stage);
+			then = now - (delta % interval);
+			//stage.pivot.y++;
+			//console.log(stage.position.y);
+			MazeUpdate([-5,10],mazerenderData);
+			renderer.render(stage);
+			//do update here
+	    }
 	}
+
 
 	// add a logo!
 	//var pixiLogo = PIXI.Sprite.fromImage("pixi.png");
