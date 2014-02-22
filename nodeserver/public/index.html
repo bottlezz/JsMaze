@@ -205,12 +205,14 @@
         mp = stage.getMousePosition(); 
        // waitingmx = mp.x;
        // waitingmy = mp.y; 
-        inputx=Math.floor(mp.x/blockSize);
-        inputy=Math.floor(mp.y/blockSize);
+        inputx=Mylocation.x - (Math.floor(mp.x/blockSize)-7);
+        inputy=Mylocation.y - (Math.floor(mp.y/blockSize)-7);
+        console.log(inputy);
+        console.log(inputx);
         if(CurrentPath.length!=0)
         	return;
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
-        CurrentPath= pathFinder(2,2,inputy,inputx,grid);
+        CurrentPath= pathFinder(Mylocation.x,Mylocation.y,inputx,inputy,grid);
         if (CurrentPath.length==0) {
         	OnPath=false;
         }else{
