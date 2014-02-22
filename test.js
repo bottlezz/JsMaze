@@ -1,5 +1,5 @@
-var height = 9;
-var width = 9;
+var height = 25;
+var width = 25;
 var cells = height*width;
 var maze = new Array();
 for(var i=0; i<cells; i++){
