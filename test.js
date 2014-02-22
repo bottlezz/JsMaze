@@ -63,7 +63,7 @@ function generateMaze(width, height){
 	return maze;
 }
 
-var frameSize = 11;
+
 function returnFrame(index, width, height){
 	var centerX = index%width;
 	var centerY = index/width;
@@ -80,6 +80,7 @@ function isOutBound(indexX, indexY, width, height){
 }
 
 function returnFrame2(centerX, centerY, width, height){
+	var frameSize = 11;
 	var frame = new Array();
 	for(var i=0; i<frameSize; i++){
 		frame[i] = new Array();
