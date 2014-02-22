@@ -67,15 +67,19 @@
 	//console.log(grid.toString());
 	console.log(mazedata);
 
-	var blockTexture=PIXI.Texture.fromImage("block1.png");
-	var emptyTexture=PIXI.Texture.fromImage("block3.png");
+	var block1Texture=PIXI.Texture.fromImage("block1.png");
+	var block2Texture=PIXI.Texture.fromImage("block2.png");
+	var empty3Texture=PIXI.Texture.fromImage("block3.png");
+	var empty4Texture=PIXI.Texture.fromImage("block4.png");
+	var empty5Texture=PIXI.Texture.fromImage("block5.png");
+	var empty6Texture=PIXI.Texture.fromImage("block6.png");
 	var charTexture=PIXI.Texture.fromImage("character1.png");
 	var bg;
 	var blockSize=15;
 	
 	function GridBlock(x,y)
     {
-        this.Disp = new PIXI.Sprite(emptyTexture);
+        this.Disp = new PIXI.Sprite(empty6Texture);
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
         this.Disp.position.x = x*blockSize+blockSize;
@@ -94,9 +98,17 @@
 			for(var j=0;j<mazeData[i].length;j++){
 				var g= new GridBlock(i,j);
 				if(mazeData[i][j]==0){
-					
+					if(j>0 && mazeData[i][j-1]==0 && i<mazeData[i].length-1 && mazeData[i+1][j]==1)
+						g.Disp.setTexture(empty3Texture);
+					else if(j>0 && mazeData[i][j-1]==1 && i<mazeData[i].length-1 && mazeData[i+1][j]==1)
+						g.Disp.setTexture(empty4Texture);
+					else if(j>0 && mazeData[i][j-1]==1 && i<mazeData[i].length-1 && mazeData[i+1][j]==0)
+						g.Disp.setTexture(empty5Texture);
 				}else{
-					g.Disp.setTexture(blockTexture);
+					if(j<mazeData.length-1 && mazeData[i][j+1]==1)
+						g.Disp.setTexture(block1Texture);
+					else
+						g.Disp.setTexture(block2Texture);
 				}
 				mazeGrids[i][j]=g;
 			}

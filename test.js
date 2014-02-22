@@ -170,6 +170,7 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 	return actions;
 }
 
+
 //test
 /*
 var height = 11;
