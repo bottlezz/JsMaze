@@ -28,6 +28,7 @@
 	//var fps = 13;
 	var now;
 	var then = Date.now();
+	var fps = 10;
 	var interval = 1000/fps;
 	var delta;
 	var mazeWidth=31;
@@ -73,7 +74,7 @@
 	
 	function GridBlock(x,y)
     {
-        this.Disp = new PIXI.Sprite(emptyTexture);
+        this.Disp = new PIXI.Sprite(empty5Texture);
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
         this.Disp.position.x = x*blockSize+blockSize;
@@ -92,14 +93,14 @@
 			for(var j=0;j<mazeData[i].length;j++){
 				var g= new GridBlock(i,j);
 				if(mazeData[i][j]==0){
-					if(i>0 && mazeData[i-1][j]==0 && j<mazeData[i].length-1 && mazeData[i][j+1]==1)
+					if(j>0 && mazeData[i][j-1]==0 && i<mazeData[i].length-1 && mazeData[i+1][j]==1)
 						g.Disp.setTexture(empty3Texture);
-					else if(i>0 && mazeData[i-1][j]==1 && j<mazeData[i].length-1 && mazeData[i][j+1]==1)
+					else if(j>0 && mazeData[i][j-1]==1 && i<mazeData[i].length-1 && mazeData[i+1][j]==1)
 						g.Disp.setTexture(empty4Texture);
 				}else{
-					if(i<mazeData.length-1 && mazeData[i+1][j]==1)
+					if(j<mazeData.length-1 && mazeData[i][j+1]==1)
 						g.Disp.setTexture(block1Texture);
-					else if(i<mazeData.length-1 && mazeData[i+1][j]==0)
+					else
 						g.Disp.setTexture(block2Texture);
 				}
 				mazeGrids[i][j]=g;
