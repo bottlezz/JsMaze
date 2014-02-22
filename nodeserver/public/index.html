@@ -25,6 +25,13 @@
 <body>
 	<script>
 
+	var grid=new Array(11);
+	for(var i=0;i<11;i++){
+		grid[i]=mew Array(11);
+	}
+	
+
+
 	// create an new instance of a pixi stage
 	// the second parameter is interactivity...
 	var interactive = true;
@@ -56,6 +63,7 @@
 						   600/2 - 20, 400/2 + 10,
 						   175, 400-75,
 						   600-115, 400-95];
+
 
 
 	for (var i=0; i < 5; i++)
@@ -133,19 +141,21 @@
 
 	// set some silly values..
 
-	buttons[0].scale.x = 1.2;
+	//buttons[0].scale.x = 1.2;
 
-	buttons[1].scale.y = 1.2;
+	//buttons[1].scale.y = 1.2;
 
-	buttons[2].rotation = Math.PI/10;
+	//buttons[2].rotation = Math.PI/10;
 
-	buttons[3].scale.x = 0.8;
-	buttons[3].scale.y = 0.8;
+	//buttons[3].scale.x = 0.8;
+	//buttons[3].scale.y = 0.8;
 
-	buttons[4].scale.x = 0.8;
-	buttons[4].scale.y = 1.2;
-	buttons[4].rotation = Math.PI;
+	//buttons[4].scale.x = 0.8;
+	//buttons[4].scale.y = 1.2;
+	//buttons[4].rotation = Math.PI;
 	// var button1 =
+	var speed=10;
+	function move(){}
 	function animate() {
 
 	    requestAnimFrame( animate );
@@ -157,17 +167,17 @@
 	}
 
 	// add a logo!
-	var pixiLogo = PIXI.Sprite.fromImage("pixi.png");
-	stage.addChild(pixiLogo);
+	//var pixiLogo = PIXI.Sprite.fromImage("pixi.png");
+	//stage.addChild(pixiLogo);
 
-	pixiLogo.position.x = 620 - 56;
-	pixiLogo.position.y = 400- 32;
+	//pixiLogo.position.x = 620 - 56;
+	//pixiLogo.position.y = 400- 32;
 
-	pixiLogo.setInteractive(true);
+	//pixiLogo.setInteractive(true);
 
-	pixiLogo.click = pixiLogo.tap = function(){
+	//pixiLogo.click = pixiLogo.tap = function(){
 
-		var win=window.open("https://github.com/GoodBoyDigital/pixi.js", '_blank');
+	//	var win=window.open("https://github.com/GoodBoyDigital/pixi.js", '_blank');
 
 	}
 	</script>
