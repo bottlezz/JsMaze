@@ -112,6 +112,9 @@ function returnFrame2(centerX, centerY, width, height, maze){
 }
 
 function pathFinder(sourceX, sourceY, targetX, targetY, frame){
+	if(frame[targetX][targetY]==1)
+		return new Array();
+	
 	var frameSize = 11;
 	var path = new Array();
 	for(var i=0; i<frameSize; i++){
@@ -143,16 +146,20 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 	path[sourceX][sourceY] = iterations;
 	addAdjacent(sourceX, sourceY, iterations);
 	
-	
+	var active = 0;
 	while(path[targetX][targetY]==0){
 		iterations += 1;
+		active = 0;
 		for(var i=0; i<frameSize; i++){
 			for(var j=0; j<frameSize; j++){
 				if(path[i][j]==iterations){
 					addAdjacent(i, j, iterations);
+					active = 1;
 				}
 			}
 		}
+		if(active==0 && path[targetX][targetY]==0)
+			return new Array();
 	}
 	
 	var actions = new Array();
@@ -183,7 +190,7 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 
 
 //test
-/*
+
 var height = 11;
 var width = 11;
 
@@ -207,13 +214,13 @@ for(var i = 0; i<frame.length; i++){
     mazeOutput += "</br>"
 }
 document.write(mazeOutput);
-*/
-// var actions = pathFinder(0,0,10,10, frame);
-// mazeOutput = "</br>Results3:</br>";
-// for(var i = 0; i<actions.length; i++){
-	// for(var j=0; j<actions[i].length; j++){
-		// mazeOutput += actions[i][j];
-	// }
-    // mazeOutput += "</br>"
-// }
-// document.write(mazeOutput);
+
+var actions = pathFinder(0,0,10,10, frame);
+mazeOutput = "</br>Results3:</br>";
+for(var i = 0; i<actions.length; i++){
+	for(var j=0; j<actions[i].length; j++){
+		mazeOutput += actions[i][j];
+	}
+    mazeOutput += "</br>"
+}
+document.write(mazeOutput);
