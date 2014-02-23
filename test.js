@@ -199,11 +199,14 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 }
 
 function realTimeActions(actions){
+	var actions1 = new Array();
+	actions1.push(actions[0]);
 	for(var i=1; i<actions.length; i++){
-		actions[i][0] += actions[i-1][0];
-		actions[i][1] += actions[i-1][1];
+		actions1.push(actions[i]);
+		actions1[i][0] += actions[i-1][0];
+		actions1[i][1] += actions[i-1][1];
 	}
-	return actions;
+	return actions1;
 }
 
 //test
