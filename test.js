@@ -179,19 +179,19 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 		console.log(currentX);
 		if(currentX>0 && path[currentX-1][currentY]==step){
 			currentX = currentX - 1;
-			actions.unshift([0,1]);
+			actions.unshift([1,0]);
 		}
 		else if(currentX<frameSize-1 && path[currentX+1][currentY]==step){
 			currentX = currentX + 1;
-			actions.unshift([0,-1]);
+			actions.unshift([-1,0]);
 		}
 		else if(currentY>0 && path[currentX][currentY-1]==step){
 			currentY = currentY - 1;
-			actions.unshift([1,0]);
+			actions.unshift([0,1]);
 		}
 		else if(currentY<frameSize-1 && path[currentX][currentY+1]==step){
 			currentY = currentY + 1;
-			actions.unshift([-1,0]);
+			actions.unshift([0,-1]);
 		}
 	}
 	
