@@ -140,7 +140,7 @@
 		return mazeGrids;
 	}
 	function MazeSetup(mazegrid){
-		//sconsole.log(mazegrid);
+
 		for(var i=0;i<mazeWidth;i++){
 			for(var j=0;j<mazeHeight;j++){
 				container.addChild(mazegrid[i][j].Disp);
@@ -155,7 +155,22 @@
 	var diffx=0;
 	var diffy=0;
 	function MazeUpdate(direction,data){
-		console.log(data);
+		if(diffx==0 && diffy==0 &&CurrentPath!=undefined){
+			if (CurrentPath.length>0) {
+				diffx=blockSize;
+				diffy=blockSize;
+				Mylocation.x=Mylocation.x+ CurrentPath[0];
+				Mylocation.y=Mylocation.y + CurrentPath[1];
+				CurrentPath.shift();
+
+				var dataobject={type:"updateLocation",userid:myid,location:Mylocation,userid:ID};
+        	//	sendOut(dataobject);
+				
+			}else{
+				OnPath=false;
+			}
+			return;
+		}
 		if(diffx!=0){
 			for (var i = data.length - 1; i >= 0; i--) {
 				for (var j = data[i].length - 1; j >= 0; j--) {
@@ -173,20 +188,7 @@
 			diffy=diffy-speed;
 		}
 		
-		if(diffx==0 && diffy==0 &&CurrentPath!=undefined){
-			if (CurrentPath.length>0) {
-				diffx=blockSize;
-				diffy=blockSize;
-				Mylocation.x=Mylocation.x+ CurrentPath[0];
-				Mylocation.y=Mylocation.y + CurrentPath[1];
-				CurrentPath.shift();
-				 var dataobject={type:"updateLocation",userid:myid,location:Mylocation,userid:ID};
-        		sendOut(dataobject);
-				
-			}else{
-				OnPath=false;
-			}
-		}
+		
 
 
 	}
@@ -250,7 +252,7 @@
         	OnPath=true;
         	diffx=15;
         	diffy=15;
-        	console.log(CurrentPath);
+        	//console.log(CurrentPath);
 
 
         }
@@ -296,6 +298,8 @@
 	function recievedCallBack(object){
 		//var dataobject={type:"updateLocation",userid:myid,location:Mylocation,time:null,actions:realTimeActions(CurrentPath)};
 		if(object.type == "updateLocation"){
+			if(object.userid==ID)
+				return;
 
 			for(var i=0; i<otherUser.length; i++){ // if it is already in the lists, delete it
 
@@ -305,7 +309,7 @@
 				
 			}
 
-					
+					console.log(object.location);
 
 					object.Disp = new PIXI.Sprite(charTexture)
 
