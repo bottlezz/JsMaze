@@ -1,5 +1,15 @@
 // width and height must be ODD!!
-function generateMaze(width, height){
+
+function generateWholeMaze(width, height, seed){
+	Math.seedrandom(seed);
+	wholeMaze = new Array();
+	wholeMaze.push(generateMaze(width, height, seed));
+	wholeMaze.push([0,0]);
+	wholeMaze.push([40,40]);
+	return wholeMaze;
+}
+
+function generateMaze(width, height, seed){
 	var cells = height*width;
 	var maze = new Array();
 	for(var i=0; i<cells; i++){
@@ -54,7 +64,7 @@ function generateMaze(width, height){
 	maze[0] = 0;
 	addAdjacent(0);
 	
-	Math.seedrandom('myURL');
+	Math.seedrandom(seed);
 	while(walls.length>0){
 	    var randomIndex = Math.floor(Math.random() * walls.length);
 	    var randomWall = walls[randomIndex];
@@ -188,13 +198,21 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 	return actions;
 }
 
+function realTimeActions(actions){
+	for(var i=1; i<actions.length; i++){
+		actions[i][0] += actions[i-1][0];
+		actions[i][1] += actions[i-1][1];
+	}
+	return actions;
+}
+
 
 //test
 
-var height = 11;
-var width = 11;
+var height = 41;
+var width = 41;
 
-var maze = generateMaze(width, height);
+var maze = generateMaze(width, height, "123");
 
 var mazeOutput = "Results:</br>";
 for(var i = 0; i<maze.length; i++){
