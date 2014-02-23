@@ -159,8 +159,8 @@
 			if (CurrentPath.length>0) {
 				diffx=blockSize;
 				diffy=blockSize;
-				Mylocation.x=Mylocation.x+ CurrentPath[0];
-				Mylocation.y=Mylocation.y + CurrentPath[1];
+				Mylocation.x=Mylocation.x+ CurrentPath[0][0];
+				Mylocation.y=Mylocation.y + CurrentPath[0][1];
 				CurrentPath.shift();
 
 				var dataobject={type:"updateLocation",userid:myid,location:Mylocation,userid:ID};
