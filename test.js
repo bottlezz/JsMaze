@@ -113,9 +113,9 @@ function returnFrame2(centerX, centerY, width, height, maze){
 	for(var i=leftCornerX; i<leftCornerX+frameSize; i++){
 		for(var j=leftCornerY; j<leftCornerY+frameSize; j++){
 			if(isOutBound(i, j, width, height)>0)
-				frame[j-leftCornerY][i-leftCornerX] = 1;
+				frame[i-leftCornerX][j-leftCornerY] = 1;
 			else
-				frame[j-leftCornerY][i-leftCornerX] = maze[j*width+i];
+				frame[i-leftCornerX][j-leftCornerY] = maze[j*width+i];
 		}
 	}
 	return frame;
@@ -211,7 +211,7 @@ function realTimeActions(actions){
 var height = 31;
 var width = 31;
 
-var maze = generateMaze(width, height, "myURL123");
+var maze = generateMaze(width, height, "myURL");
 
 var mazeOutput = "Results:</br>";
 for(var i = 0; i<maze.length; i++){
@@ -222,7 +222,7 @@ for(var i = 0; i<maze.length; i++){
 }
 document.write(mazeOutput);
 
-var frame = returnFrame2(5,5, width, height, maze);
+var frame = returnFrame2(0,5, width, height, maze);
 mazeOutput = "</br>Results2:</br>";
 for(var i = 0; i<frame.length; i++){
 	for(var j=0; j<frame[i].length; j++){
@@ -232,7 +232,7 @@ for(var i = 0; i<frame.length; i++){
 }
 document.write(mazeOutput);
 
-var actions = pathFinder(0,0,10,10, frame);
+var actions = pathFinder(5,5,5,4, frame);
 actions = realTimeActions(actions);
 mazeOutput = "</br>Results3:</br>";
 for(var i = 0; i<actions.length; i++){
