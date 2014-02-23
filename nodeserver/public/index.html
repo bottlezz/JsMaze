@@ -180,6 +180,8 @@
 				Mylocation.x=Mylocation.x+ CurrentPath[0];
 				Mylocation.y=Mylocation.y + CurrentPath[1];
 				CurrentPath.shift();
+				 var dataobject={type:"updateLocation",userid:myid,location:Mylocation,userid:ID};
+        		sendOut(dataobject);
 				
 			}else{
 				OnPath=false;
@@ -240,8 +242,7 @@
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
         CurrentPath = pathFinder(5,5,inputx,inputy,grid);
 
-        var dataobject={type:"updateLocation",userid:myid,location:Mylocation,userid:ID};
-        sendOut(dataobject);
+       
 
         if (CurrentPath.length==0) {
         	OnPath=false;
@@ -261,11 +262,7 @@
 
 
     }
-    function renderOthers(x,y){
-
-
-    }
-    
+   
 
    
 
