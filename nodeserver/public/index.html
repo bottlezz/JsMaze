@@ -25,7 +25,7 @@
 <body>
 	<script>
 
-	var fps = 1;
+	var fps = 10;
 	var now;
 	var then = Date.now();
 	var interval = 1000/fps;
@@ -148,20 +148,33 @@
 	var diffy=0;
 	function MazeUpdate(direction,data){
 		console.log(data);
-		for (var i = data.length - 1; i >= 0; i--) {
-			for (var j = data[i].length - 1; j >= 0; j--) {
-				if(diffy!=0){
-					data[i][j].Disp.position.y=data[i][j].Disp.position.y+direction[1]*speed;
-					diffy=diffy+direction[1]*speed;
-				}
-				if(diffx!=0){
+		if(diffx!=0){
+			for (var i = data.length - 1; i >= 0; i--) {
+				for (var j = data[i].length - 1; j >= 0; j--) {
 					data[i][j].Disp.position.x=data[i][j].Disp.position.x+direction[0]*speed;
-					diffx=diffx+direction[1]*speed;
 				}
-				
-			};
-		};
+			}
+			diffx=diffx-speed;
+		}
+		if(diffy!=0){
+			for (var i = data.length - 1; i >= 0; i--) {
+				for (var j = data[i].length - 1; j >= 0; j--) {
+					data[i][j].Disp.position.y=data[i][j].Disp.position.y+direction[1]*speed;
+				}
+			}
+			diffy=diffy-speed;
+		}
 		
+		if(diffx==0 && diffy==0 &&CurrentPath!=undefined){
+			if (CurrentPath.length>0) {
+				diffx=blockSize;
+				diffy=blockSize;
+				CurrentPath.shift();
+			}else{
+				OnPath=false;
+			}
+		}
+
 
 	}
 
@@ -189,12 +202,11 @@
 	requestAnimFrame( animate );
 
 
-	var speed=1;
+	var speed=5;
 	function move(gridx,gridy){
 
 	}
 	function walkPath(path){
-
 
 	}
 	var OnPath=false;
@@ -205,22 +217,36 @@
         mp = stage.getMousePosition(); 
        // waitingmx = mp.x;
        // waitingmy = mp.y; 
-        inputx=Mylocation.x - (Math.floor(mp.x/blockSize)-7);
-        inputy=Mylocation.y - (Math.floor(mp.y/blockSize)-7);
-        console.log(inputy);
-        console.log(inputx);
+        //inputx=Mylocation.x - (Math.floor(mp.x/blockSize)-7);
+//        inputy=Mylocation.y - (Math.floor(mp.y/blockSize)-7);
+
+        inputx=14-(Math.floor(mp.x/blockSize))-2;
+        inputy=14-(Math.floor(mp.y/blockSize))-2;
+        
+
+        //console.log(inputy);
+        //console.log(inputx);
+        //new 
+        distX = inputx - Mylocation.x;
+        distY = inputy - Mylocation.y;
+        
         if(CurrentPath.length!=0)
         	return;
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
-        CurrentPath= pathFinder(Mylocation.x,Mylocation.y,inputx,inputy,grid);
+        CurrentPath= pathFinder(5,5,inputx,inputy,grid);
         if (CurrentPath.length==0) {
         	OnPath=false;
         }else{
+        	OnPath=true;
+        	diffx=15;
+        	diffy=15;
         	console.log(CurrentPath);
         }
+        
 
 
     }
+    
 
    
 
@@ -239,6 +265,7 @@
 			//console.log(stage.position.y);
 			if(OnPath){
 				MazeUpdate(CurrentPath[0],mazerenderData);
+				//console.log(CurrentPath[0]);
 			}
 			
 			renderer.render(stage);
