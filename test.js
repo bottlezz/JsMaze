@@ -8,7 +8,17 @@ function generateMaze(width, height){
 	
 	//functions
 	function addAdjacent(index){
-	    var shifts = [-width, width, -1, 1];
+		var X = index%width;
+		var Y = index/width;
+		var shifts = new Array();
+		if(X>0)
+			shifts.push(-1);
+		if(Y>0)
+			shifts.push(-width);
+		if(X<width-1)
+			shifts.push(1);
+		if(Y<height-1)
+			shifts.push(width);
 	    for(var i=0; i<shifts.length; i++){
 	        if(isInMaze(index+shifts[i])==0){
 	            walls.push(index+shifts[i]);
@@ -22,16 +32,16 @@ function generateMaze(width, height){
 	
 	function returnOtherSide(index){
 	    if(index%width%2!=0){
-	        if(maze[index-1]!=0)
+	        if(index>0 && maze[index-1]!=0)
 	            return (index-1);
-	        else if(maze[index+1]!=0)
+	        else if(index<maze.length-1 && maze[index+1]!=0)
 	            return (index+1);
 	        else
 	            return 0;
 	    }
-	    if(maze[index-width]!=0)
+	    if(index>=width && maze[index-width]!=0)
 	        return (index-width);
-	    else if(maze[index+width]!=0)
+	    else if(index+width<maze.length && maze[index+width]!=0)
 	        return (index+width);
 	    else
 	        return 0;
@@ -44,6 +54,7 @@ function generateMaze(width, height){
 	maze[0] = 0;
 	addAdjacent(0);
 	
+	Math.seedrandom('myURL');
 	while(walls.length>0){
 	    var randomIndex = Math.floor(Math.random() * walls.length);
 	    var randomWall = walls[randomIndex];
@@ -196,14 +207,13 @@ for(var i = 0; i<frame.length; i++){
     mazeOutput += "</br>"
 }
 document.write(mazeOutput);
-
-var actions = pathFinder(0,0,10,10, frame);
-mazeOutput = "</br>Results3:</br>";
-for(var i = 0; i<actions.length; i++){
-	for(var j=0; j<actions[i].length; j++){
-		mazeOutput += actions[i][j];
-	}
-    mazeOutput += "</br>"
-}
-document.write(mazeOutput);
 */
+// var actions = pathFinder(0,0,10,10, frame);
+// mazeOutput = "</br>Results3:</br>";
+// for(var i = 0; i<actions.length; i++){
+	// for(var j=0; j<actions[i].length; j++){
+		// mazeOutput += actions[i][j];
+	// }
+    // mazeOutput += "</br>"
+// }
+// document.write(mazeOutput);
