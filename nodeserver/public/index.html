@@ -136,7 +136,7 @@
 			for(var j=0;j<mazeHeight;j++){
 				//console.log(mazegrid[i][j].Disp.x);
 				stage.addChild(mazegrid[i][j].Disp);
-				console.log(mazegrid[i][j].Disp.position.x)
+				//console.log(mazegrid[i][j].Disp.position.x)
 			}
 		}
 	}
@@ -152,7 +152,7 @@
 		if(diffx!=0){
 			for (var i = data.length - 1; i >= 0; i--) {
 				for (var j = data[i].length - 1; j >= 0; j--) {
-					data[i][j].Disp.position.x=data[i][j].Disp.position.x+direction[0]*speed;
+					data[i][j].Disp.position.x=data[i][j].Disp.position.x-direction[1]*speed;
 				}
 			}
 			diffx=diffx-speed;
@@ -160,7 +160,7 @@
 		if(diffy!=0){
 			for (var i = data.length - 1; i >= 0; i--) {
 				for (var j = data[i].length - 1; j >= 0; j--) {
-					data[i][j].Disp.position.y=data[i][j].Disp.position.y+direction[1]*speed;
+					data[i][j].Disp.position.y=data[i][j].Disp.position.y+direction[0]*speed;
 				}
 			}
 			diffy=diffy-speed;
@@ -267,7 +267,7 @@
 			//stage.pivot.y++;
 			//console.log(stage.position.y);
 			if(OnPath){
-				MazeUpdate(CurrentPath[0],mazerenderData);
+				//MazeUpdate(CurrentPath[0],mazerenderData);
 				//console.log(CurrentPath[0]);
 			}
 			
