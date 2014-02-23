@@ -18,6 +18,7 @@
 		}
 	</style>
 	<script src="seedrandom.js"></script>
+	<script src="client-network.js"></script>
 	<script src="test.js"></script>
 	<script src="pixi.js"></script>
 </head>
@@ -223,19 +224,23 @@
 
     	var inputx=Math.floor(mp.x/blockSize)-1;
     	var inputy=Math.floor(mp.y/blockSize)-1;
-console.log(inputx);
-        console.log(inputy);
+
         
         //new 
+
 
      	
         distX = inputx - Mylocation.x;
         distY = inputy - Mylocation.y;
         
-        if(CurrentPath.length!=0)
+        if(CurrentPath.length!=0){
         	return;
+        }
+        	
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
-        CurrentPath= pathFinder(5,5,inputx,inputy,grid);
+        CurrentPath = pathFinder(5,5,inputx,inputy,grid);
+        var dataobject={type:"updateLocation",userid:myid,location:Mylocation,time:new Date().getTime()/1000;,actions:realTimeActions(CurrentPath)};
+        sendOut(dataobject);
         if (CurrentPath.length==0) {
         	OnPath=false;
         }else{
@@ -243,6 +248,8 @@ console.log(inputx);
         	diffx=15;
         	diffy=15;
         	console.log(CurrentPath);
+
+
         }
 
         //var dataobject={type:"updateLocation",userid:myid,location:Mylocation};
@@ -277,6 +284,21 @@ console.log(inputx);
 			renderer.render(stage);
 			//do update here
 	    }
+	}
+	var otherActions;
+	var OthersPlayer=new Array();
+	var myid=ID;
+	var mymazeid=mazeID;
+	function recieveCallBack(object){
+		//var dataobject={type:"updateLocation",userid:myid,location:Mylocation,time:null,actions:realTimeActions(CurrentPath)};
+		if(object.type == "updateLocation"){
+			for(var i=0; i<otherActions; i++){ // if it is already in the lists, delete it
+				if (otherActions[i][0]=object.userid){
+					otherActions.splice(i, 1);
+				}
+			}
+			otherActions.push([object.userid, object.location, object.time, object.actions]);
+		}
 	}
 
 	
