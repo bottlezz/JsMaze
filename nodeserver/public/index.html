@@ -74,7 +74,7 @@
 	
 
 	
-	maze1d=generateMaze(mazeWidth,mazeHeight);
+	maze1d=generateMaze(mazeWidth,mazeHeight,"123");
 	var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
 	mazedata = to2DArray(maze1d,mazeWidth,mazeHeight);
 
@@ -239,7 +239,7 @@
         	
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
         CurrentPath = pathFinder(5,5,inputx,inputy,grid);
-        var dataobject={type:"updateLocation",userid:myid,location:Mylocation,time:new Date().getTime()/1000;,actions:realTimeActions(CurrentPath)};
+        var dataobject={type:"updateLocation",userid:myid,location:Mylocation,time:new Date().getTime()/1000,actions:realTimeActions(CurrentPath)};
         sendOut(dataobject);
         if (CurrentPath.length==0) {
         	OnPath=false;
@@ -277,7 +277,7 @@
 			//stage.pivot.y++;
 			//console.log(stage.position.y);
 			if(OnPath){
-				MazeUpdate(CurrentPath[0],mazerenderData);
+				//MazeUpdate(CurrentPath[0],mazerenderData);
 				//console.log(CurrentPath[0]);
 			}
 			

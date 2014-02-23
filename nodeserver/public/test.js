@@ -1,5 +1,15 @@
 // width and height must be ODD!!
-function generateMaze(width, height){
+
+function generateWholeMaze(width, height, seed){
+	Math.seedrandom(seed);
+	wholeMaze = new Array();
+	wholeMaze.push(generateMaze(width, height, seed));
+	wholeMaze.push([0,0]);
+	wholeMaze.push([40,40]);
+	return wholeMaze;
+}
+
+function generateMaze(width, height, seed){
 	var cells = height*width;
 	var maze = new Array();
 	for(var i=0; i<cells; i++){
@@ -54,7 +64,7 @@ function generateMaze(width, height){
 	maze[0] = 0;
 	addAdjacent(0);
 	
-	Math.seedrandom('myURL');
+	Math.seedrandom(seed);
 	while(walls.length>0){
 	    var randomIndex = Math.floor(Math.random() * walls.length);
 	    var randomWall = walls[randomIndex];
@@ -103,9 +113,9 @@ function returnFrame2(centerX, centerY, width, height, maze){
 	for(var i=leftCornerX; i<leftCornerX+frameSize; i++){
 		for(var j=leftCornerY; j<leftCornerY+frameSize; j++){
 			if(isOutBound(i, j, width, height)>0)
-				frame[j-leftCornerY][i-leftCornerX] = 1;
+				frame[i-leftCornerX][j-leftCornerY] = 1;
 			else
-				frame[j-leftCornerY][i-leftCornerX] = maze[j*width+i];
+				frame[i-leftCornerX][j-leftCornerY] = maze[j*width+i];
 		}
 	}
 	return frame;
@@ -188,13 +198,20 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 	return actions;
 }
 
+function realTimeActions(actions){
+	for(var i=1; i<actions.length; i++){
+		actions[i][0] += actions[i-1][0];
+		actions[i][1] += actions[i-1][1];
+	}
+	return actions;
+}
 
 //test
 /*
-var height = 11;
-var width = 11;
+var height = 31;
+var width = 31;
 
-var maze = generateMaze(width, height);
+var maze = generateMaze(width, height, "myURL");
 
 var mazeOutput = "Results:</br>";
 for(var i = 0; i<maze.length; i++){
@@ -205,7 +222,7 @@ for(var i = 0; i<maze.length; i++){
 }
 document.write(mazeOutput);
 
-var frame = returnFrame2(5,5, width, height, maze);
+var frame = returnFrame2(0,5, width, height, maze);
 mazeOutput = "</br>Results2:</br>";
 for(var i = 0; i<frame.length; i++){
 	for(var j=0; j<frame[i].length; j++){
@@ -215,7 +232,8 @@ for(var i = 0; i<frame.length; i++){
 }
 document.write(mazeOutput);
 
-var actions = pathFinder(0,0,10,10, frame);
+var actions = pathFinder(5,5,5,4, frame);
+actions = realTimeActions(actions);
 mazeOutput = "</br>Results3:</br>";
 for(var i = 0; i<actions.length; i++){
 	for(var j=0; j<actions[i].length; j++){
@@ -223,4 +241,5 @@ for(var i = 0; i<actions.length; i++){
 	}
     mazeOutput += "</br>"
 }
-document.write(mazeOutput);*/
+document.write(mazeOutput);
+*/
