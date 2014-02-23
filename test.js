@@ -206,13 +206,12 @@ function realTimeActions(actions){
 	return actions;
 }
 
-
 //test
 
-var height = 41;
-var width = 41;
+var height = 31;
+var width = 31;
 
-var maze = generateMaze(width, height, "123");
+var maze = generateMaze(width, height, "myURL123");
 
 var mazeOutput = "Results:</br>";
 for(var i = 0; i<maze.length; i++){
@@ -234,6 +233,7 @@ for(var i = 0; i<frame.length; i++){
 document.write(mazeOutput);
 
 var actions = pathFinder(0,0,10,10, frame);
+actions = realTimeActions(actions);
 mazeOutput = "</br>Results3:</br>";
 for(var i = 0; i<actions.length; i++){
 	for(var j=0; j<actions[i].length; j++){
