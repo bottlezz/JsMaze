@@ -26,8 +26,8 @@
 	        return;
 	    }
 		gameStateObject = {message1: "test", message2:"test2"};
-		wsPort = "80011";
-		connection = new WebSocket('ws://localhost:8001');
+		wsPort = "8001";
+		connection = new WebSocket('ws://bottlezz2002.info:8001');
 
 		connection.onopen = function(event) { onConnection() };
 		connection.onerror = function(error) { connectionError(error) };
