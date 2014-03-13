@@ -24,6 +24,7 @@
 </head>
 <body>
 	<script>
+	PIXI.BaseTexture.SCALE_MODE.DEFAULT = PIXI.BaseTexture.SCALE_MODE.NEAREST;
 
 	var fps = 25;
 	var now;
@@ -39,6 +40,7 @@
 	var container= new PIXI.DisplayObjectContainer();
 	container.position.x=15;
 	container.position.y=15;
+	
 
 
 	function to2DArray(array,width,height){
@@ -56,6 +58,7 @@
 	var interactive = true;
 	var stage = new PIXI.Stage(0xb2cac9, interactive);
 	stage.addChild(container);
+
 
 	function MazeLocation(inx,iny){
 		this.x=inx;
@@ -163,7 +166,7 @@
 				Mylocation.y=Mylocation.y + CurrentPath[0][1];
 				CurrentPath.shift();
 
-				var dataobject={type:"updateLocation",userid:myid,location:Mylocation ,userid:ID};
+				var dataobject={type:"updateLocation",location:Mylocation ,userid:ID};
         		sendOut(dataobject);
 				
 			}else{
@@ -224,6 +227,7 @@
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 
+
 	requestAnimFrame( animate );
 
 
@@ -231,6 +235,9 @@
 
 	var OnPath=false;
     var CurrentPath=new Array();
+
+    //send out initial update
+    
     
 	stage.click  = function()
     {
@@ -310,6 +317,16 @@
 
 	function recievedCallBack(object){
 		//var dataobject={type:"updateLocation",userid:myid,location:Mylocation,time:null,actions:realTimeActions(CurrentPath)};
+
+		if(object.type == "disconnected"){
+			for(var i in otherUser){
+				if(otherUser[i].userid==object.userid){
+					container.removeChild(otherUser[i].Disp);
+					otherUser.splice(i,1);
+					break;
+				}
+			}
+		}
 		if(object.type == "updateLocation"){
 			if(object.userid==ID)
 				return;
