@@ -43,7 +43,7 @@ wss.on('connection', function(ws) {
 	    wss.broadcast(JSON.stringify(msg));
 	});
     ws.on('message', function(message) {
-        console.log('received: %s', message);
+        //console.log('received: %s', message);
         
         wss.broadcast(message,ws);
         
