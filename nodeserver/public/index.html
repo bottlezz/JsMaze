@@ -122,7 +122,7 @@
 		for(var i=0;i<mazeWidth;i++){
 			mazeGrids[i]=new Array(mazeHeight);
 		}
-		console.log(mazeGrids);
+		//console.log(mazeGrids);
 
 		for(var i=0;i<mazeData.length;i++){
 			for(var j=0;j<mazeData[i].length;j++){
@@ -169,7 +169,7 @@
 
 
 
-	var diffx=0;
+	var diffx=0;//used for movement, if diffx is not 0, have to move diffx in x direction //used for update charactor location 
 	var diffy=0;
 	function MazeUpdate(direction,data){
 		if(diffx==0 && diffy==0 &&CurrentPath!=undefined){
@@ -222,8 +222,8 @@
 
 
 
-	var mazerenderData=ParseMazeData(mazedata);
-	console.log(mazerenderData);
+	var mazerenderData=ParseMazeData(mazedata); 
+	//console.log(mazerenderData);
 	MazeSetup(mazerenderData);
 
 	// create a background..
@@ -251,7 +251,8 @@
 	var speed=5;
 
 	var OnPath=false;
-    var CurrentPath=new Array();
+    var CurrentPath=new Array(); // used for path finding algorithm, records steup, (0,1) means move one block in y direction
+    //example of currentpath couldbe {(0,1),(1,0),(0,-1)}
 
     //send out initial update
     
