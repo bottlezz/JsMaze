@@ -42,6 +42,7 @@
 
 	var mazedata;
 	var blockSize=15;
+
 	var container= new PIXI.DisplayObjectContainer();
 	container.position.x=blockSize;
 	container.position.y=blockSize;
@@ -122,7 +123,7 @@
 		for(var i=0;i<mazeWidth;i++){
 			mazeGrids[i]=new Array(mazeHeight);
 		}
-		console.log(mazeGrids);
+		//console.log(mazeGrids);
 
 		for(var i=0;i<mazeData.length;i++){
 			for(var j=0;j<mazeData[i].length;j++){
@@ -169,7 +170,7 @@
 
 
 
-	var diffx=0;
+	var diffx=0;//used for movement, if diffx is not 0, have to move diffx in x direction //used for update charactor location 
 	var diffy=0;
 	function MazeUpdate(direction,data){
 		if(diffx==0 && diffy==0 &&CurrentPath!=undefined){
@@ -222,8 +223,8 @@
 
 
 
-	var mazerenderData=ParseMazeData(mazedata);
-	console.log(mazerenderData);
+	var mazerenderData=ParseMazeData(mazedata); 
+	//console.log(mazerenderData);
 	MazeSetup(mazerenderData);
 
 	// create a background..
@@ -251,7 +252,8 @@
 	var speed=5;
 
 	var OnPath=false;
-    var CurrentPath=new Array();
+    var CurrentPath=new Array(); // used for path finding algorithm, records steup, (0,1) means move one block in y direction
+    //example of currentpath couldbe {(0,1),(1,0),(0,-1)}
 
     //send out initial update
     
@@ -272,9 +274,11 @@
         distY = inputy - Mylocation.y;
         
         if(CurrentPath.length!=0){
+        	// if we havn't arrive, you can not point another location.
         	return;
         }
-        	
+
+        //this gird is used to parse into the path finding algorithm
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d, viewWidth, viewHeight);
         CurrentPath = pathFinder((viewWidth-1)/2,(viewHeight-1)/2,inputx,inputy,grid, viewWidth, viewHeight);
        
@@ -353,11 +357,8 @@
 			if(object.userid==ID)
 				return;
 
-			for(var i=0; i<otherUser.length; i++){ // if it is already in the lists, delete it
-				/*
-
-					otherUser[i].Disp.position.x=(object.location.x+5)*blockSize;
-					otherUser[i].Disp.position.y=(object.location.y)*blockSize;*/
+			for(var i=0; i<otherUser.length; i++){ 
+				// if it is already in the lists, delete it
 					if(otherUser[i].userid==object.userid){
 					otherUser[i].Disp.position.x=mazerenderData[object.location.x][object.location.y].Disp.position.x;
 
@@ -370,17 +371,14 @@
 				}
 				
 			}
-
-					//console.log(object.location);
+			// run to here means the object is not in our otherUser array, so we will create one rendering object for it.
 
 					object.Disp = new PIXI.Sprite(charTexture)
-/*
-					object.Disp.position.x=(object.location.x+5)*blockSize;
-					object.Disp.position.y=(object.location.y)*blockSize;*/
+
 					object.Disp.position.x=mazerenderData[object.location.x][object.location.y].Disp.position.x;
 					object.Disp.position.y=mazerenderData[object.location.x][object.location.y].Disp.position.y;
 
-object.location.x=object.location.x;
+					object.location.x=object.location.x;
 					object.location.y=object.location.y;
 					container.addChild(object.Disp);
 
