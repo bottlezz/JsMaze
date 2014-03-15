@@ -42,7 +42,8 @@
 
 	var mazedata;
 	var blockSize=15;
-	var container= new PIXI.DisplayObjectContainer();
+
+	var container= new PIXI.DisplayObjectContainer();//container is used to make the render adjustable
 	container.position.x=15;
 	container.position.y=15;
 	
@@ -273,6 +274,7 @@
         distY = inputy - Mylocation.y;
         
         if(CurrentPath.length!=0){
+        	// if we havn't arrive, you can not point another location.
         	return;
         }
         	
