@@ -123,12 +123,18 @@
 				
 
 				if(mazeData[i][j]==0){
-
-					if(j>0 && mazeData[i][j-1]==0 && i<mazeData[i].length-1 && mazeData[i+1][j]==1)
+					var up = 0;
+					if(j>0)
+						up = mazeData[i][j-1];
+					var right = 0;
+					if(i<mazeData[i].length-1)
+						right = mazeData[i+1][j];
+					
+					if(up == 0 && right ==1)
 						g.Disp.setTexture(empty3Texture);
-					else if(j>0 && mazeData[i][j-1]==1 && i<mazeData[i].length-1 && mazeData[i+1][j]==1)
+					else if(up == 1 && right == 1)
 						g.Disp.setTexture(empty4Texture);
-					else if(j>0 && mazeData[i][j-1]==1 && i<mazeData[i].length-1 && mazeData[i+1][j]==0)
+					else if(up == 1 && right == 0)
 						g.Disp.setTexture(empty5Texture);
 				}else{
 					if(j<mazeData.length-1 && mazeData[i][j+1]==1)
