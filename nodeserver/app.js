@@ -1,7 +1,7 @@
 var connect = require('connect');
 connect.createServer(
     connect.static('public')
-).listen(80);
+).listen(3000);
 
 // Scream server example: "hi" -> "HI!!!"
 var WebSocketServer = require('ws').Server

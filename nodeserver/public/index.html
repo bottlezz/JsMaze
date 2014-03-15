@@ -26,11 +26,14 @@
 	<script>
 	PIXI.BaseTexture.SCALE_MODE.DEFAULT = PIXI.BaseTexture.SCALE_MODE.NEAREST;
 
+// used for animation
 	var fps = 25;
 	var now;
 	var then = Date.now();
 	var interval = 1000/fps;
 	var delta;
+// end field
+
 	var mazeWidth=31;
 	var mazeHeight=31;
 	var viewWidth=11;
@@ -74,6 +77,7 @@
 
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(180, 180);
+
 	
 	
 	
@@ -228,6 +232,9 @@
 
 	
 	container.addChild(CharDisplay.Disp);
+	container.scale.x = 2;
+	container.scale.y = 2;
+	renderer.resize(400,400);
 
 
 	// add the renderer view element to the DOM
@@ -249,8 +256,8 @@
     {
     	mp = stage.getMousePosition(); 
 
-    	var inputx=Math.floor(mp.x/blockSize)-1;
-    	var inputy=Math.floor(mp.y/blockSize)-1;
+    	var inputx=Math.floor(mp.x/blockSize/2)-1;
+    	var inputy=Math.floor(mp.y/blockSize/2)-1;
 
         
         //new 
