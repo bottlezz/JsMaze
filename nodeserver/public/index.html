@@ -43,7 +43,6 @@
 	var mazedata;
 	var blockSize=15;
 
-<<<<<<< HEAD
 	var container= new PIXI.DisplayObjectContainer();//container is used to make the render adjustable
 	container.position.x=15;
 	container.position.y=15;
@@ -53,11 +52,8 @@
 	var OnPath=false; //indicate if the user has arrived his clicked point yet.
     var CurrentPath=new Array(); // used for path finding algorithm, records steup, (0,1) means move one block in y direction
     //example of currentpath couldbe {(0,1),(1,0),(0,-1)}
-=======
-	var container= new PIXI.DisplayObjectContainer();
-	container.position.x=blockSize;
-	container.position.y=blockSize;
->>>>>>> 4f8e1e79bf64cdcbb9a9f96abda98da866b21b9c
+
+
 	
 
 
@@ -232,8 +228,7 @@
 
 
 	}
-<<<<<<< HEAD
-=======
+
 
 
 
@@ -271,8 +266,7 @@
 
     //send out initial update
     
-    
->>>>>>> 4f8e1e79bf64cdcbb9a9f96abda98da866b21b9c
+ 
 	stage.click  = function()
     {
     	mp = stage.getMousePosition(); 
