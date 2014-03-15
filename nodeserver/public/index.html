@@ -75,7 +75,7 @@
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(180, 180);
 	
-
+	
 	
 	maze1d=generateMaze(mazeWidth,mazeHeight,"123");
 	var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
@@ -326,6 +326,12 @@
 					break;
 				}
 			}
+		}
+		if(object.type == "gamestart"){
+
+		}
+		if(object.type == "gameover"){
+
 		}
 		if(object.type == "updateLocation"){
 			if(object.userid==ID)
