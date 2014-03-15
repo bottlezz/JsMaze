@@ -277,7 +277,7 @@
         	// if we havn't arrive, you can not point another location.
         	return;
         }
-        	
+        //this gird is used to parse into the path finding algorithm
         var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
         CurrentPath = pathFinder(5,5,inputx,inputy,grid);
 
@@ -357,11 +357,8 @@
 			if(object.userid==ID)
 				return;
 
-			for(var i=0; i<otherUser.length; i++){ // if it is already in the lists, delete it
-				/*
-
-					otherUser[i].Disp.position.x=(object.location.x+5)*blockSize;
-					otherUser[i].Disp.position.y=(object.location.y)*blockSize;*/
+			for(var i=0; i<otherUser.length; i++){ 
+				// if it is already in the lists, delete it
 					if(otherUser[i].userid==object.userid){
 					otherUser[i].Disp.position.x=mazerenderData[object.location.x][object.location.y].Disp.position.x;
 
@@ -374,17 +371,14 @@
 				}
 				
 			}
-
-					//console.log(object.location);
+			// run to here means the object is not in our otherUser array, so we will create one rendering object for it.
 
 					object.Disp = new PIXI.Sprite(charTexture)
-/*
-					object.Disp.position.x=(object.location.x+5)*blockSize;
-					object.Disp.position.y=(object.location.y)*blockSize;*/
+
 					object.Disp.position.x=mazerenderData[object.location.x][object.location.y].Disp.position.x;
 					object.Disp.position.y=mazerenderData[object.location.x][object.location.y].Disp.position.y;
 
-object.location.x=object.location.x;
+					object.location.x=object.location.x;
 					object.location.y=object.location.y;
 					container.addChild(object.Disp);
 
