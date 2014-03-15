@@ -38,11 +38,12 @@
 	var mazeHeight=31;
 
 	var viewWidth=11;
-	var viewHeight=11;
+	var viewHeight=13;
 
 	var mazedata;
 	var blockSize=15;
 
+<<<<<<< HEAD
 	var container= new PIXI.DisplayObjectContainer();//container is used to make the render adjustable
 	container.position.x=15;
 	container.position.y=15;
@@ -52,6 +53,11 @@
 	var OnPath=false; //indicate if the user has arrived his clicked point yet.
     var CurrentPath=new Array(); // used for path finding algorithm, records steup, (0,1) means move one block in y direction
     //example of currentpath couldbe {(0,1),(1,0),(0,-1)}
+=======
+	var container= new PIXI.DisplayObjectContainer();
+	container.position.x=blockSize;
+	container.position.y=blockSize;
+>>>>>>> 4f8e1e79bf64cdcbb9a9f96abda98da866b21b9c
 	
 
 
@@ -91,7 +97,7 @@
 	
 	
 	maze1d=generateMaze(mazeWidth,mazeHeight,"123");
-	var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
+	var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d, viewWidth, viewHeight);
 	mazedata = to2DArray(maze1d,mazeWidth,mazeHeight);
 
 	//console.log(grid.toString());
@@ -226,6 +232,47 @@
 
 
 	}
+<<<<<<< HEAD
+=======
+
+
+
+	var mazerenderData=ParseMazeData(mazedata); 
+	//console.log(mazerenderData);
+	MazeSetup(mazerenderData);
+
+	// create a background..
+	var background = PIXI.Sprite.fromImage("frame.png");
+		
+
+	// add background to stage..
+	//container.addChild(background);
+	var CharDisplay=new CharBlock(blockSize*(Math.floor(viewHeight/2)+1),blockSize*(Math.floor(viewWidth/2)+1)); 
+
+	
+	container.addChild(CharDisplay.Disp);
+	container.scale.x = 2;
+	container.scale.y = 2;
+	renderer.resize(400,400);
+
+
+	// add the renderer view element to the DOM
+	document.body.appendChild(renderer.view);
+
+
+	requestAnimFrame( animate );
+
+
+	var speed=5;
+
+	var OnPath=false;
+    var CurrentPath=new Array(); // used for path finding algorithm, records steup, (0,1) means move one block in y direction
+    //example of currentpath couldbe {(0,1),(1,0),(0,-1)}
+
+    //send out initial update
+    
+    
+>>>>>>> 4f8e1e79bf64cdcbb9a9f96abda98da866b21b9c
 	stage.click  = function()
     {
     	mp = stage.getMousePosition(); 
@@ -245,10 +292,10 @@
         	// if we havn't arrive, you can not point another location.
         	return;
         }
-        //this gird is used to parse into the path finding algorithm
-        var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
-        CurrentPath = pathFinder(5,5,inputx,inputy,grid);
 
+        //this gird is used to parse into the path finding algorithm
+        var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d, viewWidth, viewHeight);
+        CurrentPath = pathFinder((viewWidth-1)/2,(viewHeight-1)/2,inputx,inputy,grid, viewWidth, viewHeight);
        
 
         if (CurrentPath.length==0) {

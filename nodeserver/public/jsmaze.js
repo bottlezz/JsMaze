@@ -85,11 +85,10 @@ function generateMaze(width, height, seed){
 }
 
 
-function returnFrame(index, width, height, maze){
+function returnFrame(index, width, height, maze, frameWidth, frameHeight){
 	var centerX = index%width;
 	var centerY = index/width;
-	return returnFrame2(centerX, centerY, width, height, maze);
-	
+	return returnFrame2(centerX, centerY, width, height, maze, frameWidth, frameHeight);
 }
 
 function isOutBound(indexX, indexY, width, height){
@@ -100,18 +99,17 @@ function isOutBound(indexX, indexY, width, height){
 	return 0;
 }
 
-function returnFrame2(centerX, centerY, width, height, maze){
-	var frameSize = 11;
+function returnFrame2(centerX, centerY, width, height, maze, frameWidth, frameHeight){
+	//var frameSize = 11;
 	var frame = new Array();
-	for(var i=0; i<frameSize; i++){
+	for(var i=0; i<frameHeight; i++){
 		frame[i] = new Array();
 	}
-	var windowSize = (frameSize-1)/2;
-	var leftCornerX = centerX - windowSize;
-	var leftCornerY = centerY - windowSize;
+	var leftCornerX = centerX - (frameHeight-1)/2;
+	var leftCornerY = centerY - (frameWidth-1)/2;
 
-	for(var i=leftCornerX; i<leftCornerX+frameSize; i++){
-		for(var j=leftCornerY; j<leftCornerY+frameSize; j++){
+	for(var i=leftCornerX; i<leftCornerX+frameHeight; i++){
+		for(var j=leftCornerY; j<leftCornerY+frameWidth; j++){
 			if(isOutBound(i, j, width, height)>0)
 				frame[i-leftCornerX][j-leftCornerY] = 1;
 			else
@@ -121,15 +119,15 @@ function returnFrame2(centerX, centerY, width, height, maze){
 	return frame;
 }
 
-function pathFinder(sourceX, sourceY, targetX, targetY, frame){
+function pathFinder(sourceX, sourceY, targetX, targetY, frame, frameWidth, frameHeight){
 	if(frame[targetX][targetY]==1)
 		return new Array();
 	
-	var frameSize = 11;
+	//var frameSize = 11;
 	var path = new Array();
-	for(var i=0; i<frameSize; i++){
+	for(var i=0; i<frameHeight; i++){
 		path[i] = new Array();
-		for(var j=0; j<frameSize; j++){
+		for(var j=0; j<frameWidth; j++){
 			path[i][j] = 0;
 		}
 	}
@@ -139,10 +137,10 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 		if(X>0 && frame[X-1][Y]===0 && path[X-1][Y]===0){
 			path[X-1][Y] = number+1;
 		}
-		if(X<frameSize-1 && frame[X+1][Y]===0 && path[X+1][Y]===0){
+		if(X<frameHeight-1 && frame[X+1][Y]===0 && path[X+1][Y]===0){
 			path[X+1][Y] = number+1;
 		}
-		if(Y<frameSize-1 && frame[X][Y+1]===0 && path[X][Y+1]===0){
+		if(Y<frameWidth-1 && frame[X][Y+1]===0 && path[X][Y+1]===0){
 			path[X][Y+1] = number+1;
 		}
 		if(Y>0 && frame[X][Y-1]===0 && path[X][Y-1]===0){
@@ -160,8 +158,8 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 	while(path[targetX][targetY]==0){
 		iterations += 1;
 		active = 0;
-		for(var i=0; i<frameSize; i++){
-			for(var j=0; j<frameSize; j++){
+		for(var i=0; i<frameHeight; i++){
+			for(var j=0; j<frameWidth; j++){
 				if(path[i][j]==iterations){
 					addAdjacent(i, j, iterations);
 					active = 1;
@@ -181,7 +179,7 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 			currentX = currentX - 1;
 			actions.unshift([1,0]);
 		}
-		else if(currentX<frameSize-1 && path[currentX+1][currentY]==step){
+		else if(currentX<frameHeight-1 && path[currentX+1][currentY]==step){
 			currentX = currentX + 1;
 			actions.unshift([-1,0]);
 		}
@@ -189,7 +187,7 @@ function pathFinder(sourceX, sourceY, targetX, targetY, frame){
 			currentY = currentY - 1;
 			actions.unshift([0,1]);
 		}
-		else if(currentY<frameSize-1 && path[currentX][currentY+1]==step){
+		else if(currentY<frameWidth-1 && path[currentX][currentY+1]==step){
 			currentY = currentY + 1;
 			actions.unshift([0,-1]);
 		}
