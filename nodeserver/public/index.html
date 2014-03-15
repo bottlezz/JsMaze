@@ -260,8 +260,8 @@
     {
     	mp = stage.getMousePosition(); 
 
-    	var inputx=Math.floor(mp.x/blockSize/2)-1;
-    	var inputy=Math.floor(mp.y/blockSize/2)-1;
+    	var inputx=Math.floor((mp.x-blockSize)/(blockSize*container.scale.x));
+    	var inputy=Math.floor((mp.y-blockSize)/(blockSize*container.scale.y));
 
         
         //new 
