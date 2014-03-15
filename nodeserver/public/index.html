@@ -37,7 +37,7 @@
 	var mazeWidth=31;
 	var mazeHeight=31;
 
-	var viewWidth=11;
+	var viewWidth=13;
 	var viewHeight=11;
 
 	var mazedata;
@@ -122,8 +122,8 @@
         this.Disp = new PIXI.Sprite(charTexture); //texture
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
-        this.Disp.position.x = 5*blockSize; //initial position
-        this.Disp.position.y = 5*blockSize; // initial position
+        this.Disp.position.x = Math.floor(viewHeight/2)*blockSize; //initial position
+        this.Disp.position.y = Math.floor(viewWidth/2)*blockSize; // initial position
 
     }
 	function ParseMazeData(mazeData){
@@ -380,7 +380,7 @@
 		
 
 	// add background to stage..
-	var CharDisplay=new CharBlock(105,105); 
+	var CharDisplay=new CharBlock(blockSize*(Math.floor(viewHeight/2)+1),blockSize*(Math.floor(viewWidth/2)+1)); 
 
 	
 	container.addChild(CharDisplay.Disp);
