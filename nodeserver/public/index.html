@@ -36,8 +36,10 @@
 
 	var mazeWidth=31;
 	var mazeHeight=31;
+
 	var viewWidth=11;
 	var viewHeight=11;
+
 	var mazedata;
 	var blockSize=15;
 	var container= new PIXI.DisplayObjectContainer();
@@ -97,22 +99,22 @@
 	var charTexture=PIXI.Texture.fromImage("character1.png");
 	
 	
-	function GridBlock(x,y)
+	function GridBlock(x,y) //grid(wall) object
     {
-        this.Disp = new PIXI.Sprite(empty6Texture);
+        this.Disp = new PIXI.Sprite(empty6Texture); //texture , will be reset during maze setup
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
-        this.Disp.position.x = x*blockSize+LocationShift.shiftx;
+        this.Disp.position.x = x*blockSize+LocationShift.shiftx; 
         this.Disp.position.y = y*blockSize+LocationShift.shifty;
 
     }
-    function CharBlock(x,y)
+    function CharBlock(x,y) //charcotor object
     {
-        this.Disp = new PIXI.Sprite(charTexture);
+        this.Disp = new PIXI.Sprite(charTexture); //texture
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
-        this.Disp.position.x = 5*blockSize;
-        this.Disp.position.y = 5*blockSize;
+        this.Disp.position.x = 5*blockSize; //initial position
+        this.Disp.position.y = 5*blockSize; // initial position
 
     }
 	function ParseMazeData(mazeData){
@@ -121,12 +123,14 @@
 			mazeGrids[i]=new Array(mazeHeight);
 		}
 		console.log(mazeGrids);
+
 		for(var i=0;i<mazeData.length;i++){
 			for(var j=0;j<mazeData[i].length;j++){
 				var g= new GridBlock(i,j);
 				
 
 				if(mazeData[i][j]==0){
+					// setup grid texture for all wall grids.
 					var up = 0;
 					if(j>0)
 						up = mazeData[i][j-1];
