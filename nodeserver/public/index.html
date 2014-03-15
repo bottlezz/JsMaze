@@ -37,7 +37,7 @@
 	var mazeWidth=31;
 	var mazeHeight=31;
 
-	var viewWidth=13;
+	var viewWidth=15;
 	var viewHeight=11;
 
 	var mazedata;
@@ -84,7 +84,7 @@
 		this.shifty=5*blockSize;
 	}*/
 	var Mylocation = new MazeLocation(0,5);
-	var LocationShift={shiftx:5*blockSize-Mylocation.x*blockSize,shifty:5*blockSize-Mylocation.y*blockSize};
+	var LocationShift={shiftx:Math.floor(viewWidth/2)*blockSize-Mylocation.x*blockSize,shifty:Math.floor(viewHeight/2)*blockSize-Mylocation.y*blockSize};
 
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(180, 180);
