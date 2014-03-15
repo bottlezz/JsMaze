@@ -38,13 +38,13 @@
 	var mazeHeight=31;
 
 	var viewWidth=11;
-	var viewHeight=11;
+	var viewHeight=13;
 
 	var mazedata;
 	var blockSize=15;
 	var container= new PIXI.DisplayObjectContainer();
-	container.position.x=15;
-	container.position.y=15;
+	container.position.x=blockSize;
+	container.position.y=blockSize;
 	
 
 
@@ -84,7 +84,7 @@
 	
 	
 	maze1d=generateMaze(mazeWidth,mazeHeight,"123");
-	var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
+	var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d, viewWidth, viewHeight);
 	mazedata = to2DArray(maze1d,mazeWidth,mazeHeight);
 
 	//console.log(grid.toString());
@@ -232,7 +232,7 @@
 
 	// add background to stage..
 	//container.addChild(background);
-	var CharDisplay=new CharBlock(105,105); 
+	var CharDisplay=new CharBlock(blockSize*(Math.floor(viewHeight/2)+1),blockSize*(Math.floor(viewWidth/2)+1)); 
 
 	
 	container.addChild(CharDisplay.Disp);
@@ -275,9 +275,8 @@
         	return;
         }
         	
-        var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d);
-        CurrentPath = pathFinder(5,5,inputx,inputy,grid);
-
+        var grid=returnFrame2(Mylocation.x,Mylocation.y,mazeWidth,mazeHeight,maze1d, viewWidth, viewHeight);
+        CurrentPath = pathFinder((viewWidth-1)/2,(viewHeight-1)/2,inputx,inputy,grid, viewWidth, viewHeight);
        
 
         if (CurrentPath.length==0) {
