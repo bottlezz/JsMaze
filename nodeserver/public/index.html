@@ -37,15 +37,20 @@
 	var mazeWidth=31;
 	var mazeHeight=31;
 
-	var viewWidth=11;
-	var viewHeight=13;
+
+
+	var viewWidth=15;
+
+
+	var viewHeight=11;
 
 	var mazedata;
 	var blockSize=15;
 
+
 	var container= new PIXI.DisplayObjectContainer();//container is used to make the render adjustable
-	container.position.x=15;
-	container.position.y=15;
+	container.position.x=blockSize;
+	container.position.y=blockSize;
 
 	var speed=5; //moving 5 px per frame.
 
@@ -54,8 +59,24 @@
     //example of currentpath couldbe {(0,1),(1,0),(0,-1)}
 
 
+	var diffx=0;//used for movement, if diffx is not 0, have to move diffx in x direction //used for update charactor location 
+	var diffy=0;
 	
+	// create an new instance of a pixi stage
+	// the second parameter is interactivity...
+	var interactive = true;
+	var stage = new PIXI.Stage(0xb2cac9, interactive);
 
+
+	var container= new PIXI.DisplayObjectContainer();//container is used to make the render adjustable
+	// create a renderer instance.
+	var renderer = PIXI.autoDetectRenderer(180, 180);
+
+	container.position.x=15;
+	container.position.y=15;
+
+
+	stage.addChild(container);
 
 	function to2DArray(array,width,height){
 		var first=new Array(height);
@@ -67,13 +88,7 @@
 		}
 		return first;
 	}
-	// create an new instance of a pixi stage
-	// the second parameter is interactivity...
-	var interactive = true;
-	var stage = new PIXI.Stage(0xb2cac9, interactive);
-	stage.addChild(container);
-
-
+	
 	function MazeLocation(inx,iny){
 		this.x=inx;
 		this.y=iny;
@@ -84,11 +99,18 @@
 		this.shifty=5*blockSize;
 	}*/
 	var Mylocation = new MazeLocation(0,5);
-	var LocationShift={shiftx:5*blockSize-Mylocation.x*blockSize,shifty:5*blockSize-Mylocation.y*blockSize};
+	var LocationShift={shiftx:Math.floor(viewWidth/2)*blockSize-Mylocation.x*blockSize,shifty:Math.floor(viewHeight/2)*blockSize-Mylocation.y*blockSize};
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 7f46d9c6439fde58f8004098850b3e0630b8496a
 
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(180, 180);
+>>>>>>> 7f46d9c6439fde58f8004098850b3e0630b8496a
 
+	
 	
 	
 	
@@ -122,8 +144,8 @@
         this.Disp = new PIXI.Sprite(charTexture); //texture
         this.Disp.anchor.x = 0;
         this.Disp.anchor.y = 0;
-        this.Disp.position.x = 5*blockSize; //initial position
-        this.Disp.position.y = 5*blockSize; // initial position
+        this.Disp.position.x = Math.floor(viewWidth/2)*blockSize; //initial position
+        this.Disp.position.y = Math.floor(viewHeight/2)*blockSize; // initial position
 
     }
 	function ParseMazeData(mazeData){
@@ -178,8 +200,6 @@
 
 
 
-	var diffx=0;//used for movement, if diffx is not 0, have to move diffx in x direction //used for update charactor location 
-	var diffy=0;
 	function MazeUpdate(direction,data){
 		if(diffx==0 && diffy==0 &&CurrentPath!=undefined){
 			if (CurrentPath.length>0) {
@@ -380,7 +400,7 @@
 		
 
 	// add background to stage..
-	var CharDisplay=new CharBlock(105,105); 
+	var CharDisplay=new CharBlock(blockSize*(Math.floor(viewHeight/2)+1),blockSize*(Math.floor(viewWidth/2)+1)); 
 
 	
 	container.addChild(CharDisplay.Disp);
