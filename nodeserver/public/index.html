@@ -38,7 +38,7 @@
 	var mazeHeight=31;
 
 	var viewWidth=15;
-	var viewHeight=11;
+	var viewHeight=15;
 
 	var mazedata;
 	var blockSize=15;
@@ -63,13 +63,15 @@
 	var interactive = true;
 	var stage = new PIXI.Stage(0xb2cac9, interactive);
 
+	var globalScale = 2;
+
 
 	var container= new PIXI.DisplayObjectContainer();//container is used to make the render adjustable
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(180, 180);
 
-	container.position.x=15;
-	container.position.y=15;
+	container.position.x=blockSize;
+	container.position.y=blockSize;
 
 
 	stage.addChild(container);
@@ -249,8 +251,8 @@
     {
     	mp = stage.getMousePosition(); 
 
-    	var inputx=Math.floor((mp.x-blockSize)/(blockSize*container.scale.x));
-    	var inputy=Math.floor((mp.y-blockSize)/(blockSize*container.scale.y));
+    	var inputx=Math.floor((mp.x-blockSize)/(blockSize*globalScale));
+    	var inputy=Math.floor((mp.y-blockSize)/(blockSize*globalScale));
 
         
         //new 
@@ -394,11 +396,11 @@
 
 	
 	container.addChild(CharDisplay.Disp);
-	container.scale.x = 2;
-	container.scale.y = 2;
-	renderer.resize(400,400);
+	container.scale.x = globalScale;
+	container.scale.y = globalScale;
+	renderer.resize((viewWidth+1)*blockSize*globalScale,(viewHeight+1)*blockSize*globalScale);
 
-
+	//renderer.view.style.border
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 
